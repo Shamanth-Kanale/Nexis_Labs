@@ -1,0 +1,1415 @@
+<!DOCTYPE html>
+<html lang="en" class="dark scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nexis Labs — Next-Gen Intelligence & Cloud Platform</title>
+  ~~
+  <!-- Google Fonts: Outfit & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            heading: ['Outfit', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              50: '#eef2ff',
+              100: '#e0e7ff',
+              400: '#818cf8',
+              500: '#6366f1',
+              600: '#4f46e5',
+              700: '#4338ca',
+            },
+            accent: {
+              cyan: '#06b6d4',
+              teal: '#14b8a6',
+              purple: '#a855f7',
+              pink: '#ec4899',
+            },
+            dark: {
+              bg: '#090d16',
+              card: '#0f172a',
+              border: '#1e293b',
+              muted: '#94a3b8',
+            }
+          },
+          animation: {
+            'blob': 'blob 10s infinite cubic-bezier(0.4, 0, 0.2, 1)',
+            'float-slow': 'float 6s ease-in-out infinite',
+            'float-fast': 'float 4s ease-in-out infinite alternate',
+            'pulse-subtle': 'pulseSubtle 3s ease-in-out infinite',
+            'shimmer': 'shimmer 2.5s infinite linear',
+          },
+          keyframes: {
+            blob: {
+              '0%, 100%': { transform: 'translate(0px, 0px) scale(1)' },
+              '33%': { transform: 'translate(30px, -50px) scale(1.15)' },
+              '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+            },
+            float: {
+              '0%, 100%': { transform: 'translateY(0px)' },
+              '50%': { transform: 'translateY(-12px)' },
+            },
+            pulseSubtle: {
+              '0%, 100%': { opacity: 0.8, transform: 'scale(1)' },
+              '50%': { opacity: 1, transform: 'scale(1.02)' },
+            },
+            shimmer: {
+              '0%': { backgroundPosition: '-200% 0' },
+              '100%': { backgroundPosition: '200% 0' },
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Custom Glassmorphism & Background Glows */
+    .glass-card {
+      background: rgba(15, 23, 42, 0.65);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .light .glass-card {
+      background: rgba(255, 255, 255, 0.75);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(226, 232, 240, 0.9);
+    }
+    
+    .gradient-border {
+      position: relative;
+    }
+    .gradient-border::before {
+      content: '';
+      position: absolute;
+      inset: -1px;
+      border-radius: inherit;
+      padding: 1px;
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.5), rgba(6, 182, 212, 0.4), rgba(236, 72, 153, 0.3));
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events: none;
+    }
+
+    /* Subtle grid backdrop */
+    .bg-grid-pattern {
+      background-size: 40px 40px;
+      background-image: 
+        linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    }
+    .light .bg-grid-pattern {
+      background-size: 40px 40px;
+      background-image: 
+        linear-gradient(to right, rgba(0, 0, 0, 0.04) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(0, 0, 0, 0.04) 1px, transparent 1px);
+    }
+
+    /* Custom subtle scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #090d16;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #1e293b;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #4f46e5;
+    }
+  </style>
+</head>
+
+<body class="bg-[#090d16] text-slate-100 font-sans transition-colors duration-300 selection:bg-brand-500 selection:text-white relative overflow-x-hidden">
+
+  <!-- Dynamic Ambient Glow Spots -->
+  <div class="fixed top-0 left-1/4 w-96 h-96 bg-brand-500/20 rounded-full blur-[140px] pointer-events-none -z-10 animate-blob"></div>
+  <div class="fixed top-1/3 right-10 w-80 h-80 bg-accent-cyan/15 rounded-full blur-[130px] pointer-events-none -z-10 animate-blob" style="animation-delay: 2s;"></div>
+  <div class="fixed bottom-10 left-10 w-96 h-96 bg-accent-pink/10 rounded-full blur-[150px] pointer-events-none -z-10 animate-blob" style="animation-delay: 4s;"></div>
+
+  <!-- NAVIGATION BAR -->
+  <header class="sticky top-0 z-40 transition-all duration-300 border-b border-white/5 bg-[#090d16]/80 backdrop-blur-xl">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      
+      <!-- Brand Logo -->
+      <a href="#" class="flex items-center gap-3 group focus:outline-none">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-600 via-indigo-500 to-accent-cyan flex items-center justify-center text-white font-heading font-black text-xl shadow-lg shadow-brand-500/30 group-hover:scale-105 transition-transform duration-200">
+          N
+        </div>
+        <div class="flex flex-col">
+          <span class="font-heading font-bold text-xl tracking-tight text-white flex items-center">
+            Nexis<span class="text-brand-400">Labs</span>
+            <span class="ml-1.5 inline-block w-2 h-2 rounded-full bg-accent-cyan animate-pulse"></span>
+          </span>
+          <span class="text-[10px] uppercase font-semibold tracking-widest text-slate-400">Next-Gen Systems</span>
+        </div>
+      </a>
+
+      <!-- Desktop Navigation Links -->
+      <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-300">
+        <a href="#solutions" class="hover:text-white transition-colors duration-150">Solutions</a>
+        <a href="#platform" class="hover:text-white transition-colors duration-150">Platform</a>
+        <a href="#metrics" class="hover:text-white transition-colors duration-150">Metrics</a>
+        <a href="#pricing" class="hover:text-white transition-colors duration-150">Pricing</a>
+        <a href="#testimonials" class="hover:text-white transition-colors duration-150">Reviews</a>
+      </nav>
+
+      <!-- Right CTAs & Theme Switcher -->
+      <div class="hidden md:flex items-center gap-4">
+        <!-- Theme Toggle Button -->
+        <button id="themeToggleBtn" aria-label="Toggle Dark/Light Mode" class="w-10 h-10 rounded-xl flex items-center justify-center border border-slate-700/60 bg-slate-900/40 text-slate-300 hover:text-white hover:border-slate-500 transition-colors">
+          <i id="themeIcon" class="fa-solid fa-moon"></i>
+        </button>
+
+        <button onclick="openContactModal('Consultation')" class="px-5 py-2.5 rounded-xl text-sm font-semibold bg-white/5 hover:bg-white/10 text-slate-200 border border-white/10 transition-all duration-200">
+          Sign In
+        </button>
+        <button onclick="openContactModal('Platform Demo')" class="px-5 py-2.5 rounded-xl text-sm font-semibold bg-gradient-to-r from-brand-600 via-indigo-600 to-accent-cyan text-white shadow-lg shadow-brand-600/25 hover:shadow-brand-500/40 hover:scale-[1.02] active:scale-95 transition-all duration-200">
+          Get Started <i class="fa-solid fa-arrow-right ml-1 text-xs"></i>
+        </button>
+      </div>
+
+      <!-- Mobile Menu Button -->
+      <div class="flex items-center gap-2 md:hidden">
+        <button id="mobileThemeToggle" aria-label="Toggle Mode" class="p-2.5 text-slate-300 hover:text-white">
+          <i id="mobileThemeIcon" class="fa-solid fa-moon"></i>
+        </button>
+        <button id="mobileMenuBtn" aria-label="Toggle Mobile Menu" class="p-2.5 rounded-lg text-slate-300 hover:text-white hover:bg-slate-800">
+          <i class="fa-solid fa-bars text-xl"></i>
+        </button>
+      </div>
+
+    </div>
+
+    <!-- Mobile Slide-down Menu -->
+    <div id="mobileMenu" class="hidden md:hidden border-t border-slate-800 bg-[#090d16] px-5 py-6 space-y-4 shadow-2xl">
+      <nav class="flex flex-col space-y-3 font-medium text-slate-300">
+        <a href="#solutions" class="mobile-nav-link py-2 hover:text-brand-400">Solutions</a>
+        <a href="#platform" class="mobile-nav-link py-2 hover:text-brand-400">Platform</a>
+        <a href="#metrics" class="mobile-nav-link py-2 hover:text-brand-400">Metrics</a>
+        <a href="#pricing" class="mobile-nav-link py-2 hover:text-brand-400">Pricing</a>
+        <a href="#testimonials" class="mobile-nav-link py-2 hover:text-brand-400">Reviews</a>
+      </nav>
+      <div class="pt-4 border-t border-slate-800/80 flex flex-col gap-3">
+        <button onclick="openContactModal('Free Demo'); closeMobileMenu();" class="w-full py-3 rounded-xl font-semibold bg-gradient-to-r from-brand-600 to-accent-cyan text-white text-center shadow-lg">
+          Get Started
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO SECTION -->
+  <section class="relative pt-12 pb-24 md:pt-20 md:pb-32 overflow-hidden bg-grid-pattern">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+        
+        <!-- Left Hero Copy -->
+        <div class="lg:col-span-7 space-y-7 text-center lg:text-left">
+          
+          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-brand-500/30 bg-brand-500/10 text-brand-300 text-xs font-semibold uppercase tracking-wider backdrop-blur-md">
+            <span class="w-2 h-2 rounded-full bg-brand-400 animate-ping"></span>
+            Nexis Autonomous Engine v3.4 is Live
+          </div>
+
+          <h1 class="font-heading text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-[1.12]">
+            Architecting <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 via-accent-cyan to-brand-500">Autonomous</span> Cloud Intelligence.
+          </h1>
+
+          <p class="text-slate-400 text-base sm:text-lg max-w-2xl mx-auto lg:mx-0 leading-relaxed font-normal">
+            Nexis Labs engineers hyper-scale orchestration layers, real-time telemetry, and resilient microservices designed for enterprises demanding sub-millisecond edge latency.
+          </p>
+
+          <!-- Action Buttons -->
+          <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
+            <button onclick="openContactModal('Primary Hero CTA')" class="w-full sm:w-auto px-8 py-3.5 rounded-xl font-semibold bg-gradient-to-r from-brand-600 to-indigo-600 hover:from-brand-500 hover:to-indigo-500 text-white shadow-xl shadow-brand-600/30 hover:shadow-brand-500/50 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 flex items-center justify-center gap-2">
+              <span>Deploy In 60 Seconds</span>
+              <i class="fa-solid fa-bolt text-yellow-300 text-sm"></i>
+            </button>
+            <a href="#platform" class="w-full sm:w-auto px-7 py-3.5 rounded-xl font-semibold bg-slate-900/60 hover:bg-slate-800 text-slate-200 border border-slate-700/80 transition-all duration-200 flex items-center justify-center gap-2">
+              <i class="fa-regular fa-circle-play text-brand-400"></i>
+              <span>Interactive Tour</span>
+            </a>
+          </div>
+
+          <!-- Trust Proof Mini Badges -->
+          <div class="pt-6 border-t border-slate-800/80 flex flex-wrap items-center justify-center lg:justify-start gap-6 text-xs text-slate-400">
+            <div class="flex items-center gap-2">
+              <i class="fa-solid fa-shield-halved text-brand-400 text-sm"></i>
+              <span>SOC2 Type II Certified</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <i class="fa-solid fa-bolt-lightning text-accent-cyan text-sm"></i>
+              <span>Zero-Config Clustering</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <i class="fa-solid fa-lock text-green-400 text-sm"></i>
+              <span>End-to-End Quantum Encryption</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Hero Interactive Dynamic Glass Card -->
+        <div class="lg:col-span-5 relative flex justify-center">
+          
+          <!-- Outer dynamic ring -->
+          <div class="w-full max-w-md p-1.5 rounded-3xl bg-gradient-to-b from-brand-500/40 via-accent-cyan/20 to-purple-500/30 shadow-2xl relative">
+            
+            <div class="glass-card rounded-[22px] p-6 text-left relative overflow-hidden">
+              
+              <!-- Card Header -->
+              <div class="flex items-center justify-between border-b border-slate-800/80 pb-4 mb-5">
+                <div class="flex items-center gap-3">
+                  <div class="w-3 h-3 rounded-full bg-rose-500"></div>
+                  <div class="w-3 h-3 rounded-full bg-amber-500"></div>
+                  <div class="w-3 h-3 rounded-full bg-emerald-500"></div>
+                  <span class="text-xs text-slate-400 font-mono pl-2">cluster-us-east-1 // live</span>
+                </div>
+                <span class="px-2.5 py-0.5 rounded-md text-[11px] font-mono bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center gap-1.5">
+                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> Healthy
+                </span>
+              </div>
+
+              <!-- Real-time Stats Grid inside card -->
+              <div class="grid grid-cols-2 gap-3 mb-5">
+                <div class="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800/80">
+                  <div class="text-xs text-slate-400 font-medium">Network Throughput</div>
+                  <div class="text-2xl font-bold font-heading text-white mt-1">42.8 <span class="text-xs text-brand-400 font-normal">TB/s</span></div>
+                  <div class="text-[11px] text-emerald-400 mt-1 flex items-center gap-1">
+                    <i class="fa-solid fa-arrow-trend-up"></i> +14.2% vs last hr
+                  </div>
+                </div>
+                <div class="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800/80">
+                  <div class="text-xs text-slate-400 font-medium">Edge Compute Latency</div>
+                  <div class="text-2xl font-bold font-heading text-white mt-1">1.18 <span class="text-xs text-accent-cyan font-normal">ms</span></div>
+                  <div class="text-[11px] text-accent-cyan mt-1 flex items-center gap-1">
+                    <i class="fa-solid fa-check"></i> 99th percentile
+                  </div>
+                </div>
+              </div>
+
+              <!-- Animated Chart Simulation Bar -->
+              <div class="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800/80 mb-5">
+                <div class="flex justify-between items-center text-xs mb-2">
+                  <span class="text-slate-300 font-medium">Auto-Scaling Nodes Active</span>
+                  <span class="text-brand-400 font-mono font-semibold">1,024 / 1,200</span>
+                </div>
+                <!-- Dynamic SVG Graph -->
+                <div class="h-14 w-full flex items-end gap-1.5 pt-2">
+                  <div class="flex-1 bg-brand-500/30 hover:bg-brand-500 rounded-t h-[40%] transition-all"></div>
+                  <div class="flex-1 bg-brand-500/40 hover:bg-brand-500 rounded-t h-[55%] transition-all"></div>
+                  <div class="flex-1 bg-brand-500/50 hover:bg-brand-500 rounded-t h-[75%] transition-all"></div>
+                  <div class="flex-1 bg-brand-500/60 hover:bg-brand-500 rounded-t h-[60%] transition-all"></div>
+                  <div class="flex-1 bg-brand-500/75 hover:bg-brand-500 rounded-t h-[88%] transition-all"></div>
+                  <div class="flex-1 bg-brand-500 hover:bg-accent-cyan rounded-t h-[96%] transition-all"></div>
+                  <div class="flex-1 bg-brand-400 hover:bg-accent-cyan rounded-t h-[82%] transition-all"></div>
+                  <div class="flex-1 bg-brand-500 hover:bg-accent-cyan rounded-t h-[94%] transition-all"></div>
+                </div>
+              </div>
+
+              <!-- Live simulated logs feed -->
+              <div class="font-mono text-[11px] text-slate-400 bg-black/40 p-3 rounded-lg border border-slate-800/60 space-y-1">
+                <div class="text-emerald-400">> [sync-worker] Route mesh verified. 24 clusters rebalanced.</div>
+                <div class="text-slate-400">> [waf-guardian] 0 anomaly threats detected in past window.</div>
+              </div>
+
+            </div>
+
+            <!-- Floating Micro-Badge 1 -->
+            <div class="absolute -top-5 -right-5 glass-card px-4 py-2.5 rounded-2xl shadow-xl flex items-center gap-3 animate-float-slow hidden sm:flex border border-white/10">
+              <div class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold">
+                <i class="fa-solid fa-server"></i>
+              </div>
+              <div>
+                <div class="text-[11px] text-slate-400 uppercase font-semibold">Active Mesh</div>
+                <div class="text-xs font-bold text-white">99.999% SLA</div>
+              </div>
+            </div>
+
+            <!-- Floating Micro-Badge 2 -->
+            <div class="absolute -bottom-6 -left-6 glass-card px-4 py-2.5 rounded-2xl shadow-xl flex items-center gap-3 animate-float-fast hidden sm:flex border border-white/10">
+              <div class="w-8 h-8 rounded-lg bg-brand-500/20 text-brand-400 flex items-center justify-center font-bold">
+                <i class="fa-solid fa-brain"></i>
+              </div>
+              <div>
+                <div class="text-[11px] text-slate-400 uppercase font-semibold">Cognitive Agent</div>
+                <div class="text-xs font-bold text-white">Continuous Tuning</div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- METRICS / STATS SECTION -->
+  <section id="metrics" class="py-12 border-y border-slate-800/80 bg-slate-900/40 backdrop-blur-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+        
+        <div class="space-y-1">
+          <div class="font-heading text-3xl sm:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-brand-400 to-indigo-400 counter" data-target="99.99">
+            0%
+          </div>
+          <p class="text-xs sm:text-sm font-medium text-slate-400">Guaranteed System Uptime</p>
+        </div>
+
+        <div class="space-y-1">
+          <div class="font-heading text-3xl sm:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-accent-cyan to-teal-400 counter" data-target="500">
+            0M+
+          </div>
+          <p class="text-xs sm:text-sm font-medium text-slate-400">Queries Handled Daily</p>
+        </div>
+
+        <div class="space-y-1">
+          <div class="font-heading text-3xl sm:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400 counter" data-target="180">
+            0+
+          </div>
+          <p class="text-xs sm:text-sm font-medium text-slate-400">Global Edge PoPs</p>
+        </div>
+
+        <div class="space-y-1">
+          <div class="font-heading text-3xl sm:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-orange-400 counter" data-target="4.96">
+            0.0
+          </div>
+          <p class="text-xs sm:text-sm font-medium text-slate-400">Enterprise CSAT Rating</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- SOLUTIONS / SERVICES SECTION -->
+  <section id="solutions" class="py-24 relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
+        <h2 class="text-xs font-bold uppercase tracking-widest text-brand-400">Engineered For High Demands</h2>
+        <h3 class="font-heading text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight">
+          Comprehensive Architectural Capabilities
+        </h3>
+        <p class="text-slate-400 text-base leading-relaxed">
+          From microsecond routing to self-correcting neural pipelines, Nexis Labs removes engineering overhead so your teams can build at rocket velocity.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        
+        <!-- Service Card 1 -->
+        <div class="glass-card p-8 rounded-2xl group hover:-translate-y-2 transition-all duration-300 relative overflow-hidden flex flex-col justify-between">
+          <div class="absolute -right-12 -top-12 w-32 h-32 bg-brand-500/10 rounded-full group-hover:scale-150 transition-transform duration-500"></div>
+          <div>
+            <div class="w-14 h-14 rounded-xl bg-brand-500/10 text-brand-400 border border-brand-500/20 flex items-center justify-center text-2xl mb-6 group-hover:bg-brand-500 group-hover:text-white transition-colors duration-300">
+              <i class="fa-solid fa-cloud-bolt"></i>
+            </div>
+            <div class="flex items-center gap-2 mb-2">
+              <span class="text-[10px] font-bold uppercase tracking-widest px-2.5 py-0.5 rounded-full bg-brand-500/20 text-brand-300">Distributed</span>
+            </div>
+            <h4 class="font-heading text-xl font-bold text-white mb-3">Multi-Cloud Fabric</h4>
+            <p class="text-slate-400 text-sm leading-relaxed mb-6">
+              Effortlessly bridge workloads between AWS, GCP, Azure, and bare metal with unified policy enforcement and automated zero-loss failover.
+            </p>
+          </div>
+          <div class="flex items-center justify-between pt-4 border-t border-slate-800 text-xs font-semibold text-slate-300">
+            <span>Dynamic DNS & Routing</span>
+            <i class="fa-solid fa-arrow-right text-brand-400 group-hover:translate-x-1 transition-transform"></i>
+          </div>
+        </div>
+
+        <!-- Service Card 2 -->
+        <div class="glass-card p-8 rounded-2xl group hover:-translate-y-2 transition-all duration-300 relative overflow-hidden flex flex-col justify-between">
+          <div class="absolute -right-12 -top-12 w-32 h-32 bg-accent-cyan/10 rounded-full group-hover:scale-150 transition-transform duration-500"></div>
+          <div>
+            <div class="w-14 h-14 rounded-xl bg-accent-cyan/10 text-accent-cyan border border-accent-cyan/20 flex items-center justify-center text-2xl mb-6 group-hover:bg-accent-cyan group-hover:text-slate-900 transition-colors duration-300">
+              <i class="fa-solid fa-microchip"></i>
+            </div>
+            <div class="flex items-center gap-2 mb-2">
+              <span class="text-[10px] font-bold uppercase tracking-widest px-2.5 py-0.5 rounded-full bg-accent-cyan/20 text-accent-cyan">Autonomous</span>
+            </div>
+            <h4 class="font-heading text-xl font-bold text-white mb-3">Autonomous Neural LLMs</h4>
+            <p class="text-slate-400 text-sm leading-relaxed mb-6">
+              Low-latency generative inferences co-located on your private cluster, backed by proprietary dynamic context compression algorithms.
+            </p>
+          </div>
+          <div class="flex items-center justify-between pt-4 border-t border-slate-800 text-xs font-semibold text-slate-300">
+            <span>Sub-5ms Inference</span>
+            <i class="fa-solid fa-arrow-right text-accent-cyan group-hover:translate-x-1 transition-transform"></i>
+          </div>
+        </div>
+
+        <!-- Service Card 3 -->
+        <div class="glass-card p-8 rounded-2xl group hover:-translate-y-2 transition-all duration-300 relative overflow-hidden flex flex-col justify-between">
+          <div class="absolute -right-12 -top-12 w-32 h-32 bg-purple-500/10 rounded-full group-hover:scale-150 transition-transform duration-500"></div>
+          <div>
+            <div class="w-14 h-14 rounded-xl bg-purple-500/10 text-purple-400 border border-purple-500/20 flex items-center justify-center text-2xl mb-6 group-hover:bg-purple-600 group-hover:text-white transition-colors duration-300">
+              <i class="fa-solid fa-shield-virus"></i>
+            </div>
+            <div class="flex items-center gap-2 mb-2">
+              <span class="text-[10px] font-bold uppercase tracking-widest px-2.5 py-0.5 rounded-full bg-purple-500/20 text-purple-300">Hardened</span>
+            </div>
+            <h4 class="font-heading text-xl font-bold text-white mb-3">Quantum-Shield SecOps</h4>
+            <p class="text-slate-400 text-sm leading-relaxed mb-6">
+              Automated penetration sandboxes, continuous container runtime protection, and proactive zero-day behavioral defense loops.
+            </p>
+          </div>
+          <div class="flex items-center justify-between pt-4 border-t border-slate-800 text-xs font-semibold text-slate-300">
+            <span>Compliance Automation</span>
+            <i class="fa-solid fa-arrow-right text-purple-400 group-hover:translate-x-1 transition-transform"></i>
+          </div>
+        </div>
+
+        <!-- Service Card 4 -->
+        <div class="glass-card p-8 rounded-2xl group hover:-translate-y-2 transition-all duration-300 relative overflow-hidden flex flex-col justify-between">
+          <div class="absolute -right-12 -top-12 w-32 h-32 bg-emerald-500/10 rounded-full group-hover:scale-150 transition-transform duration-500"></div>
+          <div>
+            <div class="w-14 h-14 rounded-xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 flex items-center justify-center text-2xl mb-6 group-hover:bg-emerald-500 group-hover:text-slate-900 transition-colors duration-300">
+              <i class="fa-solid fa-chart-line"></i>
+            </div>
+            <div class="flex items-center gap-2 mb-2">
+              <span class="text-[10px] font-bold uppercase tracking-widest px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300">Telemetry</span>
+            </div>
+            <h4 class="font-heading text-xl font-bold text-white mb-3">Zero-Lag Observability</h4>
+            <p class="text-slate-400 text-sm leading-relaxed mb-6">
+              Ingest over 10 billion events per minute with instantaneous query indexing, distributed traces, and predictive root-cause diagnosis.
+            </p>
+          </div>
+          <div class="flex items-center justify-between pt-4 border-t border-slate-800 text-xs font-semibold text-slate-300">
+            <span>Live Trace Explorer</span>
+            <i class="fa-solid fa-arrow-right text-emerald-400 group-hover:translate-x-1 transition-transform"></i>
+          </div>
+        </div>
+
+        <!-- Service Card 5 -->
+        <div class="glass-card p-8 rounded-2xl group hover:-translate-y-2 transition-all duration-300 relative overflow-hidden flex flex-col justify-between">
+          <div class="absolute -right-12 -top-12 w-32 h-32 bg-amber-500/10 rounded-full group-hover:scale-150 transition-transform duration-500"></div>
+          <div>
+            <div class="w-14 h-14 rounded-xl bg-amber-500/10 text-amber-400 border border-amber-500/20 flex items-center justify-center text-2xl mb-6 group-hover:bg-amber-500 group-hover:text-slate-900 transition-colors duration-300">
+              <i class="fa-solid fa-code-merge"></i>
+            </div>
+            <div class="flex items-center gap-2 mb-2">
+              <span class="text-[10px] font-bold uppercase tracking-widest px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300">DevOps</span>
+            </div>
+            <h4 class="font-heading text-xl font-bold text-white mb-3">GitOps Pipelines</h4>
+            <p class="text-slate-400 text-sm leading-relaxed mb-6">
+              Declarative state syncing from Git to Kubernetes. Ephemeral preview environments are spun up in seconds for each pull request.
+            </p>
+          </div>
+          <div class="flex items-center justify-between pt-4 border-t border-slate-800 text-xs font-semibold text-slate-300">
+            <span>Instant Previews</span>
+            <i class="fa-solid fa-arrow-right text-amber-400 group-hover:translate-x-1 transition-transform"></i>
+          </div>
+        </div>
+
+        <!-- Service Card 6 -->
+        <div class="glass-card p-8 rounded-2xl group hover:-translate-y-2 transition-all duration-300 relative overflow-hidden flex flex-col justify-between">
+          <div class="absolute -right-12 -top-12 w-32 h-32 bg-pink-500/10 rounded-full group-hover:scale-150 transition-transform duration-500"></div>
+          <div>
+            <div class="w-14 h-14 rounded-xl bg-pink-500/10 text-pink-400 border border-pink-500/20 flex items-center justify-center text-2xl mb-6 group-hover:bg-pink-500 group-hover:text-white transition-colors duration-300">
+              <i class="fa-solid fa-cubes"></i>
+            </div>
+            <div class="flex items-center gap-2 mb-2">
+              <span class="text-[10px] font-bold uppercase tracking-widest px-2.5 py-0.5 rounded-full bg-pink-500/20 text-pink-300">Design Systems</span>
+            </div>
+            <h4 class="font-heading text-xl font-bold text-white mb-3">Modular UX Engineering</h4>
+            <p class="text-slate-400 text-sm leading-relaxed mb-6">
+              Composable frontend architectures built on micro-frontends with integrated performance budgets, design tokens, and accessibility testing.
+            </p>
+          </div>
+          <div class="flex items-center justify-between pt-4 border-t border-slate-800 text-xs font-semibold text-slate-300">
+            <span>Token Synchronization</span>
+            <i class="fa-solid fa-arrow-right text-pink-400 group-hover:translate-x-1 transition-transform"></i>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- INTERACTIVE PLATFORM SHOWCASE / TABS -->
+  <section id="platform" class="py-24 bg-slate-900/30 border-t border-slate-800/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto mb-12">
+        <h2 class="text-xs font-bold uppercase tracking-widest text-accent-cyan">Interactive Experience</h2>
+        <h3 class="font-heading text-3xl sm:text-4xl font-bold text-white tracking-tight mt-2">
+          Control Plane in Action
+        </h3>
+        <p class="text-slate-400 text-sm sm:text-base mt-3">
+          Explore how the Nexis orchestration console enables engineering teams to coordinate global clusters with a few clicks.
+        </p>
+      </div>
+
+      <!-- Tab Buttons -->
+      <div class="flex justify-center mb-10">
+        <div class="inline-flex p-1.5 rounded-2xl bg-slate-900 border border-slate-800 text-xs sm:text-sm font-medium">
+          <button class="tab-btn active px-4 sm:px-6 py-2.5 rounded-xl transition-all duration-200 text-white bg-brand-600 shadow-md" data-target="tab-orchestration">
+            <i class="fa-solid fa-network-wired mr-2"></i> Cloud Fabric
+          </button>
+          <button class="tab-btn px-4 sm:px-6 py-2.5 rounded-xl transition-all duration-200 text-slate-400 hover:text-white" data-target="tab-ai">
+            <i class="fa-solid fa-robot mr-2"></i> AI Tuning
+          </button>
+          <button class="tab-btn px-4 sm:px-6 py-2.5 rounded-xl transition-all duration-200 text-slate-400 hover:text-white" data-target="tab-security">
+            <i class="fa-solid fa-shield-halved mr-2"></i> Security Shield
+          </button>
+        </div>
+      </div>
+
+      <!-- Tab Contents Container -->
+      <div class="glass-card rounded-3xl p-6 sm:p-10 border border-slate-800 shadow-2xl relative">
+        
+        <!-- Tab 1: Cloud Fabric -->
+        <div id="tab-orchestration" class="tab-pane grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          <div class="lg:col-span-5 space-y-5">
+            <span class="px-3 py-1 rounded-full text-xs font-semibold bg-brand-500/20 text-brand-400 border border-brand-500/30">Global Routing v4</span>
+            <h4 class="font-heading text-2xl sm:text-3xl font-bold text-white">Dynamic Autonomous Failover</h4>
+            <p class="text-slate-400 text-sm leading-relaxed">
+              When latency spikes in Frankfurt, the mesh automatically steers traffic through Zurich in under 4ms without dropping ongoing WebSocket connections.
+            </p>
+            <ul class="space-y-3 text-sm text-slate-300">
+              <li class="flex items-center gap-3">
+                <i class="fa-solid fa-circle-check text-brand-400 text-base"></i>
+                Zero connection drops during live migrations
+              </li>
+              <li class="flex items-center gap-3">
+                <i class="fa-solid fa-circle-check text-brand-400 text-base"></i>
+                Intelligent cost-aware routing algorithms
+              </li>
+              <li class="flex items-center gap-3">
+                <i class="fa-solid fa-circle-check text-brand-400 text-base"></i>
+                Multi-region state synchronicity via Raft consensus
+              </li>
+            </ul>
+            <button onclick="openContactModal('Cloud Fabric Sandbox')" class="mt-4 px-6 py-2.5 rounded-xl bg-brand-600 hover:bg-brand-500 text-white text-sm font-semibold transition-all">
+              Launch Sandbox Instance
+            </button>
+          </div>
+
+          <div class="lg:col-span-7 bg-black/60 rounded-2xl p-5 border border-slate-800/80 font-mono text-xs text-slate-300">
+            <div class="flex items-center justify-between border-b border-slate-800 pb-3 mb-4 text-slate-400">
+              <span>nexis-cli node route --live</span>
+              <span class="text-emerald-400 flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span> Connected</span>
+            </div>
+            <pre class="overflow-x-auto text-emerald-400 leading-relaxed">
+{
+  "topology": "nexus-mesh-alpha",
+  "active_regions": ["us-east", "eu-central", "ap-northeast"],
+  "health_score": 0.9998,
+  "dynamic_routing": {
+    "latency_threshold_ms": 15,
+    "automatic_failover": true,
+    "current_load_balancing": "adaptive_least_connections"
+  },
+  "traffic_diverted_pct": 0.00
+}
+            </pre>
+            <div class="mt-4 p-3 bg-slate-900 rounded-lg border border-slate-800 flex items-center justify-between">
+              <span class="text-slate-400">Simulate Cluster Failure:</span>
+              <button id="simFailBtn" class="px-3 py-1 rounded bg-rose-500/20 text-rose-300 hover:bg-rose-500/40 border border-rose-500/30 text-[11px] font-bold transition">
+                Simulate Chaos Event
+              </button>
+            </div>
+            <div id="simLog" class="hidden mt-2 text-[11px] text-amber-300 bg-amber-950/30 p-2 rounded border border-amber-800/40">
+              [Simulated Alert] Traffic rerouted to backup nodes in 3.1ms. Zero packets lost.
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 2: AI Tuning (Hidden initially) -->
+        <div id="tab-ai" class="tab-pane hidden grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          <div class="lg:col-span-5 space-y-5">
+            <span class="px-3 py-1 rounded-full text-xs font-semibold bg-accent-cyan/20 text-accent-cyan border border-accent-cyan/30">Inference Orchestrator</span>
+            <h4 class="font-heading text-2xl sm:text-3xl font-bold text-white">Continuous Model Distillation</h4>
+            <p class="text-slate-400 text-sm leading-relaxed">
+              Fine-tune models on proprietary domain knowledge while preserving 100% data sovereignty on private hardware envelopes.
+            </p>
+            <ul class="space-y-3 text-sm text-slate-300">
+              <li class="flex items-center gap-3">
+                <i class="fa-solid fa-circle-check text-accent-cyan text-base"></i>
+                8-bit and 4-bit precision quantizer on deploy
+              </li>
+              <li class="flex items-center gap-3">
+                <i class="fa-solid fa-circle-check text-accent-cyan text-base"></i>
+                Automatic cache deduplication for common queries
+              </li>
+              <li class="flex items-center gap-3">
+                <i class="fa-solid fa-circle-check text-accent-cyan text-base"></i>
+                Built-in guardrails against prompt injections
+              </li>
+            </ul>
+            <button onclick="openContactModal('AI Model Access')" class="mt-4 px-6 py-2.5 rounded-xl bg-accent-cyan hover:bg-teal-400 text-slate-900 text-sm font-semibold transition-all">
+              Request Model API Keys
+            </button>
+          </div>
+
+          <div class="lg:col-span-7 bg-slate-900/90 rounded-2xl p-6 border border-slate-800">
+            <div class="flex items-center justify-between text-xs text-slate-400 border-b border-slate-800 pb-3 mb-4">
+              <span class="font-mono">model_eval_realtime.py</span>
+              <span class="text-accent-cyan font-semibold">Trained on 8.4B Tokens</span>
+            </div>
+            <div class="space-y-4">
+              <div>
+                <div class="flex justify-between text-xs font-semibold mb-1">
+                  <span class="text-slate-300">Context Retention Rate</span>
+                  <span class="text-accent-cyan">98.4%</span>
+                </div>
+                <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
+                  <div class="bg-gradient-to-r from-accent-cyan to-brand-500 h-full rounded-full" style="width: 98.4%"></div>
+                </div>
+              </div>
+
+              <div>
+                <div class="flex justify-between text-xs font-semibold mb-1">
+                  <span class="text-slate-300">Latency Optimization Index</span>
+                  <span class="text-emerald-400">3.8x Faster</span>
+                </div>
+                <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
+                  <div class="bg-gradient-to-r from-teal-400 to-emerald-400 h-full rounded-full" style="width: 88%"></div>
+                </div>
+              </div>
+
+              <div class="p-3 bg-black/40 rounded-xl border border-slate-800 font-mono text-xs text-slate-400">
+                <span class="text-indigo-400">prompt:</span> "Summarize global telemetry anomalies"<br>
+                <span class="text-emerald-400">response:</span> "Zero critical anomalies in last 8 hours across 40 edge nodes."
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 3: Security Shield (Hidden initially) -->
+        <div id="tab-security" class="tab-pane hidden grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          <div class="lg:col-span-5 space-y-5">
+            <span class="px-3 py-1 rounded-full text-xs font-semibold bg-purple-500/20 text-purple-400 border border-purple-500/30">Zero Trust Mesh</span>
+            <h4 class="font-heading text-2xl sm:text-3xl font-bold text-white">Quantum Resistant Cryptography</h4>
+            <p class="text-slate-400 text-sm leading-relaxed">
+              Every RPC call between your services is encrypted with post-quantum lattice-based algorithms and verified via dynamic mTLS certificates.
+            </p>
+            <ul class="space-y-3 text-sm text-slate-300">
+              <li class="flex items-center gap-3">
+                <i class="fa-solid fa-circle-check text-purple-400 text-base"></i>
+                Ephemeral certificates rotating every 15 minutes
+              </li>
+              <li class="flex items-center gap-3">
+                <i class="fa-solid fa-circle-check text-purple-400 text-base"></i>
+                Real-time automated DDoS scrubbers at layer 3/4/7
+              </li>
+              <li class="flex items-center gap-3">
+                <i class="fa-solid fa-circle-check text-purple-400 text-base"></i>
+                Granular RBAC access policies defined in code
+              </li>
+            </ul>
+            <button onclick="openContactModal('Security Audit')" class="mt-4 px-6 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white text-sm font-semibold transition-all">
+              Download SOC2 Whitepaper
+            </button>
+          </div>
+
+          <div class="lg:col-span-7 bg-slate-950 p-6 rounded-2xl border border-slate-800 text-left">
+            <div class="flex items-center justify-between text-xs text-slate-400 border-b border-slate-800 pb-3 mb-4">
+              <span class="font-mono">Security Firewall State</span>
+              <span class="text-purple-400">KYBER-1024 Activated</span>
+            </div>
+            <div class="grid grid-cols-2 gap-3 mb-4">
+              <div class="p-3 bg-slate-900 rounded-lg border border-slate-800">
+                <div class="text-[11px] text-slate-400">Total Attacks Blocked</div>
+                <div class="text-xl font-bold font-mono text-purple-400 mt-1">2,419,002</div>
+              </div>
+              <div class="p-3 bg-slate-900 rounded-lg border border-slate-800">
+                <div class="text-[11px] text-slate-400">Mean Detection Time</div>
+                <div class="text-xl font-bold font-mono text-emerald-400 mt-1">&lt; 120ms</div>
+              </div>
+            </div>
+            <div class="font-mono text-xs text-slate-400 bg-black/50 p-3 rounded-lg border border-slate-800 space-y-1">
+              <div class="text-purple-400">[mTLS] Validating node worker-eu-9 # cert_exp: 14m 20s</div>
+              <div class="text-slate-400">[Firewall] SYN flood mitigation enabled on Port 443</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- INTERACTIVE PRICING SECTION -->
+  <section id="pricing" class="py-24 relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto mb-12 space-y-4">
+        <h2 class="text-xs font-bold uppercase tracking-widest text-brand-400">Transparent & Predictable</h2>
+        <h3 class="font-heading text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight">
+          Invest in Velocity, Not Overhead
+        </h3>
+        <p class="text-slate-400 text-base">
+          Transparent pricing designed to scale seamlessly from nimble product startups to global Fortune 500 enterprises.
+        </p>
+
+        <!-- Pricing Toggle (Monthly vs Annual) -->
+        <div class="flex items-center justify-center gap-4 pt-4">
+          <span id="monthlyLabel" class="text-sm font-semibold text-white">Monthly Billing</span>
+          <button id="billingToggle" aria-label="Toggle Billing Interval" class="w-14 h-8 rounded-full bg-brand-600 p-1 relative transition-colors focus:outline-none">
+            <div id="toggleBall" class="w-6 h-6 rounded-full bg-white transition-transform duration-200"></div>
+          </button>
+          <span id="annualLabel" class="text-sm font-semibold text-slate-400 flex items-center gap-1.5">
+            Annual Billing
+            <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">Save 20%</span>
+          </span>
+        </div>
+      </div>
+
+      <!-- Pricing Tier Cards -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
+        
+        <!-- Starter Tier -->
+        <div class="glass-card rounded-3xl p-8 border border-slate-800 hover:border-slate-700 transition-all flex flex-col justify-between">
+          <div>
+            <div class="text-sm font-bold uppercase tracking-wider text-slate-400 mb-2">Startup Edition</div>
+            <h4 class="font-heading text-2xl font-bold text-white mb-2">Core Mesh</h4>
+            <p class="text-slate-400 text-xs mb-6">Ideal for emerging teams launching high-concurrency microservices.</p>
+            
+            <div class="flex items-baseline gap-1 mb-6">
+              <span class="text-4xl font-extrabold font-heading text-white price-val" data-monthly="49" data-annual="39">$49</span>
+              <span class="text-xs text-slate-400 font-medium">/ month</span>
+            </div>
+
+            <ul class="space-y-3 text-xs sm:text-sm text-slate-300 border-t border-slate-800/80 pt-6">
+              <li class="flex items-center gap-2.5">
+                <i class="fa-solid fa-check text-brand-400"></i> Up to 5 Active Clusters
+              </li>
+              <li class="flex items-center gap-2.5">
+                <i class="fa-solid fa-check text-brand-400"></i> 100M API Requests/month
+              </li>
+              <li class="flex items-center gap-2.5">
+                <i class="fa-solid fa-check text-brand-400"></i> 7-Day Metrics Retention
+              </li>
+              <li class="flex items-center gap-2.5">
+                <i class="fa-solid fa-check text-brand-400"></i> Standard Community & Discord Support
+              </li>
+              <li class="flex items-center gap-2.5 text-slate-500 line-through">
+                <i class="fa-solid fa-xmark text-slate-600"></i> Custom Zero-Day SLA
+              </li>
+            </ul>
+          </div>
+
+          <button onclick="openContactModal('Core Mesh Plan')" class="mt-8 w-full py-3 rounded-xl font-semibold bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition-all">
+            Start 14-Day Free Trial
+          </button>
+        </div>
+
+        <!-- Pro Tier (Popular) -->
+        <div class="glass-card rounded-3xl p-8 border-2 border-brand-500 relative flex flex-col justify-between shadow-2xl shadow-brand-500/10 scale-100 lg:-translate-y-2">
+          <div class="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-gradient-to-r from-brand-600 to-accent-cyan text-white text-[11px] font-bold uppercase tracking-wider shadow-md">
+            Most Popular
+          </div>
+          <div>
+            <div class="text-sm font-bold uppercase tracking-wider text-brand-400 mb-2">Scale Architecture</div>
+            <h4 class="font-heading text-2xl font-bold text-white mb-2">Autonomous Scale</h4>
+            <p class="text-slate-400 text-xs mb-6">Designed for scale-ups requiring instant multi-region edge coverage.</p>
+            
+            <div class="flex items-baseline gap-1 mb-6">
+              <span class="text-4xl font-extrabold font-heading text-white price-val" data-monthly="199" data-annual="159">$199</span>
+              <span class="text-xs text-slate-400 font-medium">/ month</span>
+            </div>
+
+            <ul class="space-y-3 text-xs sm:text-sm text-slate-300 border-t border-slate-800/80 pt-6">
+              <li class="flex items-center gap-2.5">
+                <i class="fa-solid fa-check text-brand-400"></i> Unlimited Clusters & Namespaces
+              </li>
+              <li class="flex items-center gap-2.5">
+                <i class="fa-solid fa-check text-brand-400"></i> 1 Billion API Invocations/month
+              </li>
+              <li class="flex items-center gap-2.5">
+                <i class="fa-solid fa-check text-brand-400"></i> 90-Day Telemetry & AI Root-Cause
+              </li>
+              <li class="flex items-center gap-2.5">
+                <i class="fa-solid fa-check text-brand-400"></i> Automated Chaos Testing & GitOps
+              </li>
+              <li class="flex items-center gap-2.5">
+                <i class="fa-solid fa-check text-brand-400"></i> 99.99% Uptime Guarantee
+              </li>
+            </ul>
+          </div>
+
+          <button onclick="openContactModal('Autonomous Scale Plan')" class="mt-8 w-full py-3 rounded-xl font-semibold bg-gradient-to-r from-brand-600 to-indigo-600 hover:from-brand-500 hover:to-indigo-500 text-white shadow-lg shadow-brand-500/30 transition-all">
+            Deploy Scaled Stack
+          </button>
+        </div>
+
+        <!-- Enterprise Tier -->
+        <div class="glass-card rounded-3xl p-8 border border-slate-800 hover:border-slate-700 transition-all flex flex-col justify-between">
+          <div>
+            <div class="text-sm font-bold uppercase tracking-wider text-slate-400 mb-2">Global Infrastructure</div>
+            <h4 class="font-heading text-2xl font-bold text-white mb-2">Custom Hybrid</h4>
+            <p class="text-slate-400 text-xs mb-6">Tailored for defense, banking, healthcare and large enterprise ecosystems.</p>
+            
+            <div class="flex items-baseline gap-1 mb-6">
+              <span class="text-4xl font-extrabold font-heading text-white">Custom</span>
+            </div>
+
+            <ul class="space-y-3 text-xs sm:text-sm text-slate-300 border-t border-slate-800/80 pt-6">
+              <li class="flex items-center gap-2.5">
+                <i class="fa-solid fa-check text-brand-400"></i> Air-Gapped On-Premises Installation
+              </li>
+              <li class="flex items-center gap-2.5">
+                <i class="fa-solid fa-check text-brand-400"></i> Bespoke Neural Models & Quantization
+              </li>
+              <li class="flex items-center gap-2.5">
+                <i class="fa-solid fa-check text-brand-400"></i> Dedicated Solution Architect & 15m SLA
+              </li>
+              <li class="flex items-center gap-2.5">
+                <i class="fa-solid fa-check text-brand-400"></i> Custom Security Governance & Audits
+              </li>
+              <li class="flex items-center gap-2.5">
+                <i class="fa-solid fa-check text-brand-400"></i> Hardware Security Module (HSM) Support
+              </li>
+            </ul>
+          </div>
+
+          <button onclick="openContactModal('Enterprise Custom Plan')" class="mt-8 w-full py-3 rounded-xl font-semibold bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition-all">
+            Speak with an Architect
+          </button>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CUSTOMER TESTIMONIALS SECTION -->
+  <section id="testimonials" class="py-24 bg-slate-900/40 border-t border-slate-800/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-2xl mx-auto mb-16 space-y-3">
+        <h2 class="text-xs font-bold uppercase tracking-widest text-brand-400">Validated By Leaders</h2>
+        <h3 class="font-heading text-3xl sm:text-4xl font-bold text-white tracking-tight">
+          Trusted by Trailblazing Engineering Teams
+        </h3>
+        <p class="text-slate-400 text-sm sm:text-base">
+          Read how top technical organizations migrated to Nexis Labs to reduce their infrastructure latency and infrastructure bills.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        
+        <!-- Review 1 -->
+        <div class="glass-card p-6 sm:p-8 rounded-2xl flex flex-col justify-between border border-slate-800">
+          <div>
+            <div class="flex text-amber-400 text-sm gap-1 mb-4">
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+            </div>
+            <p class="text-slate-300 text-sm leading-relaxed mb-6 italic">
+              "Nexis Labs reduced our global 99th-percentile response time from 180ms to 24ms in a weekend. The multi-cloud mesh handled Black Friday without a single human intervention."
+            </p>
+          </div>
+          <div class="flex items-center gap-4 pt-4 border-t border-slate-800">
+            <div class="w-11 h-11 rounded-full bg-brand-500/20 text-brand-400 flex items-center justify-center font-bold text-base border border-brand-500/30">
+              SM
+            </div>
+            <div>
+              <div class="text-sm font-bold text-white">Sarah Morales</div>
+              <div class="text-xs text-slate-400">VP of Engineering, FinCore Global</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Review 2 -->
+        <div class="glass-card p-6 sm:p-8 rounded-2xl flex flex-col justify-between border border-slate-800">
+          <div>
+            <div class="flex text-amber-400 text-sm gap-1 mb-4">
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+            </div>
+            <p class="text-slate-300 text-sm leading-relaxed mb-6 italic">
+              "The automated AI context distillation alone saved us over $40,000 monthly in GPU compute charges. It’s genuinely rare to see an infrastructure tooling product deliver on every promise."
+            </p>
+          </div>
+          <div class="flex items-center gap-4 pt-4 border-t border-slate-800">
+            <div class="w-11 h-11 rounded-full bg-accent-cyan/20 text-accent-cyan flex items-center justify-center font-bold text-base border border-accent-cyan/30">
+              AL
+            </div>
+            <div>
+              <div class="text-sm font-bold text-white">Alexander Lind</div>
+              <div class="text-xs text-slate-400">Chief Architect, Synthetix AI</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Review 3 -->
+        <div class="glass-card p-6 sm:p-8 rounded-2xl flex flex-col justify-between border border-slate-800">
+          <div>
+            <div class="flex text-amber-400 text-sm gap-1 mb-4">
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+            </div>
+            <p class="text-slate-300 text-sm leading-relaxed mb-6 italic">
+              "Their GitOps pipelines and automated preview clusters gave our product engineers total autonomy. Our release cadence increased from bi-weekly to twelve times per day."
+            </p>
+          </div>
+          <div class="flex items-center gap-4 pt-4 border-t border-slate-800">
+            <div class="w-11 h-11 rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center font-bold text-base border border-purple-500/30">
+              EK
+            </div>
+            <div>
+              <div class="text-sm font-bold text-white">Elena Rostova</div>
+              <div class="text-xs text-slate-400">Head of Platform, CloudScale Inc.</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CTA BANNER -->
+  <section class="py-20 relative overflow-hidden">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="rounded-3xl bg-gradient-to-r from-brand-700 via-indigo-700 to-accent-cyan p-8 sm:p-14 text-center text-white relative shadow-2xl overflow-hidden">
+        
+        <!-- Subtle background overlay circle -->
+        <div class="absolute -right-20 -bottom-20 w-80 h-80 rounded-full bg-white/10 blur-2xl pointer-events-none"></div>
+
+        <div class="max-w-2xl mx-auto space-y-6 relative z-10">
+          <h3 class="font-heading text-3xl sm:text-5xl font-extrabold tracking-tight">
+            Ready to Accelerate Your Compute Layer?
+          </h3>
+          <p class="text-indigo-100 text-base sm:text-lg">
+            Join thousands of developers and tech companies who rely on Nexis Labs for bulletproof edge infrastructure.
+          </p>
+          <div class="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
+            <button onclick="openContactModal('CTA Banner Demo')" class="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-white text-brand-700 font-bold hover:bg-slate-100 hover:scale-105 active:scale-95 transition-all shadow-xl">
+              Get Started for Free
+            </button>
+            <button onclick="openContactModal('Technical Advisory')" class="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-black/30 hover:bg-black/40 text-white font-semibold border border-white/20 transition-all">
+              Book Architecture Review
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-slate-800 bg-[#060910] text-slate-400 pt-16 pb-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 mb-12">
+        
+        <!-- Col 1: Brand Info -->
+        <div class="lg:col-span-2 space-y-4">
+          <a href="#" class="flex items-center gap-3">
+            <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-brand-600 to-accent-cyan flex items-center justify-center text-white font-heading font-black text-lg">
+              N
+            </div>
+            <span class="font-heading font-bold text-xl text-white">Nexis Labs</span>
+          </a>
+          <p class="text-xs sm:text-sm text-slate-400 max-w-sm leading-relaxed">
+            Pioneering distributed cloud orchestration, low-latency machine learning pipelines, and post-quantum zero-trust defense architectures for enterprise scale.
+          </p>
+          <div class="flex items-center gap-3 pt-2 text-slate-400">
+            <a href="#" aria-label="Twitter/X" class="w-9 h-9 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-center hover:text-white hover:border-slate-600 transition-colors">
+              <i class="fa-brands fa-x-twitter text-sm"></i>
+            </a>
+            <a href="#" aria-label="GitHub" class="w-9 h-9 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-center hover:text-white hover:border-slate-600 transition-colors">
+              <i class="fa-brands fa-github text-sm"></i>
+            </a>
+            <a href="#" aria-label="Discord" class="w-9 h-9 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-center hover:text-white hover:border-slate-600 transition-colors">
+              <i class="fa-brands fa-discord text-sm"></i>
+            </a>
+            <a href="#" aria-label="LinkedIn" class="w-9 h-9 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-center hover:text-white hover:border-slate-600 transition-colors">
+              <i class="fa-brands fa-linkedin text-sm"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Col 2: Solutions -->
+        <div class="space-y-3">
+          <h4 class="text-xs font-bold uppercase tracking-wider text-white">Solutions</h4>
+          <ul class="space-y-2 text-xs sm:text-sm">
+            <li><a href="#solutions" class="hover:text-white transition">Edge Routing</a></li>
+            <li><a href="#solutions" class="hover:text-white transition">Neural Inferences</a></li>
+            <li><a href="#solutions" class="hover:text-white transition">Zero-Trust SecOps</a></li>
+            <li><a href="#solutions" class="hover:text-white transition">Observability Engine</a></li>
+            <li><a href="#solutions" class="hover:text-white transition">GitOps Automation</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 3: Resources -->
+        <div class="space-y-3">
+          <h4 class="text-xs font-bold uppercase tracking-wider text-white">Resources</h4>
+          <ul class="space-y-2 text-xs sm:text-sm">
+            <li><a href="#" class="hover:text-white transition">Documentation</a></li>
+            <li><a href="#" class="hover:text-white transition">API Reference</a></li>
+            <li><a href="#" class="hover:text-white transition">System Status</a></li>
+            <li><a href="#" class="hover:text-white transition">Whitepapers</a></li>
+            <li><a href="#" class="hover:text-white transition">Security Compliance</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 4: Newsletter -->
+        <div class="space-y-3">
+          <h4 class="text-xs font-bold uppercase tracking-wider text-white">Stay In the Loop</h4>
+          <p class="text-xs text-slate-400">Subscribe for release notes, system engineering breakdowns, and zero-day patches.</p>
+          <form id="newsletterForm" onsubmit="handleNewsletter(event)" class="space-y-2">
+            <div class="relative">
+              <input type="email" id="newsEmail" required placeholder="engineer@domain.com" class="w-full px-3 py-2 text-xs bg-slate-900 border border-slate-800 rounded-lg text-white focus:outline-none focus:border-brand-500">
+            </div>
+            <button type="submit" class="w-full py-2 bg-brand-600 hover:bg-brand-500 text-white font-semibold rounded-lg text-xs transition">
+              Subscribe to Dispatch
+            </button>
+            <p id="newsSuccess" class="hidden text-[11px] text-emerald-400 mt-1">Thank you for subscribing!</p>
+          </form>
+        </div>
+
+      </div>
+
+      <!-- Footer Bottom -->
+      <div class="pt-8 border-t border-slate-800/80 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-4">
+        <div>
+          &copy; <span id="currentYear"></span> Nexis Labs Inc. All rights reserved.
+        </div>
+        <div class="flex items-center gap-6">
+          <a href="#" class="hover:text-slate-400 transition">Privacy Policy</a>
+          <a href="#" class="hover:text-slate-400 transition">Terms of Service</a>
+          <a href="#" class="hover:text-slate-400 transition">Cookie Settings</a>
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- INTERACTIVE LEAD MODAL -->
+  <div id="contactModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300">
+    <div class="glass-card max-w-lg w-full rounded-2xl p-6 sm:p-8 border border-slate-700/80 relative shadow-2xl transform scale-95 transition-transform duration-300" id="modalBox">
+      
+      <!-- Close Button -->
+      <button onclick="closeContactModal()" aria-label="Close dialog" class="absolute top-4 right-4 text-slate-400 hover:text-white p-2">
+        <i class="fa-solid fa-xmark text-lg"></i>
+      </button>
+
+      <div id="formState">
+        <div class="mb-5">
+          <span id="modalTopicBadge" class="text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-brand-500/20 text-brand-400">
+            Demo Request
+          </span>
+          <h3 class="font-heading text-2xl font-bold text-white mt-2">Get Started with Nexis Labs</h3>
+          <p class="text-xs text-slate-400 mt-1">Fill out the details below to unlock sandboxes and schedule an architect call.</p>
+        </div>
+
+        <form id="leadForm" onsubmit="handleLeadSubmit(event)" class="space-y-4">
+          <div>
+            <label class="block text-xs font-medium text-slate-300 mb-1" for="leadName">Full Name</label>
+            <input type="text" id="leadName" required placeholder="Elena Rostova" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-900/80 border border-slate-700 text-white text-sm focus:outline-none focus:border-brand-500">
+          </div>
+
+          <div>
+            <label class="block text-xs font-medium text-slate-300 mb-1" for="leadEmail">Work Email</label>
+            <input type="email" id="leadEmail" required placeholder="elena@company.com" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-900/80 border border-slate-700 text-white text-sm focus:outline-none focus:border-brand-500">
+          </div>
+
+          <div>
+            <label class="block text-xs font-medium text-slate-300 mb-1" for="leadCluster">Estimated Scale / Requirement</label>
+            <select id="leadCluster" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-900/80 border border-slate-700 text-white text-sm focus:outline-none focus:border-brand-500">
+              <option value="startup">1 - 10 Microservices (&lt; 50M req/mo)</option>
+              <option value="mid">10 - 50 Microservices (Scale Tier)</option>
+              <option value="enterprise">50+ Microservices (Enterprise / Custom)</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-xs font-medium text-slate-300 mb-1" for="leadNotes">Specific Requirements (Optional)</label>
+            <textarea id="leadNotes" rows="3" placeholder="Tell us about your multi-region failover or latency goals..." class="w-full px-3.5 py-2.5 rounded-xl bg-slate-900/80 border border-slate-700 text-white text-sm focus:outline-none focus:border-brand-500"></textarea>
+          </div>
+
+          <button type="submit" id="submitBtn" class="w-full py-3 rounded-xl bg-gradient-to-r from-brand-600 to-accent-cyan text-white font-semibold text-sm shadow-lg hover:shadow-brand-500/30 transition-all flex items-center justify-center gap-2">
+            <span>Deploy Custom Sandbox</span>
+            <i class="fa-solid fa-arrow-right text-xs"></i>
+          </button>
+        </form>
+      </div>
+
+      <!-- Success State -->
+      <div id="successState" class="hidden text-center py-8 space-y-4">
+        <div class="w-16 h-16 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-3xl mx-auto border border-emerald-500/40">
+          <i class="fa-solid fa-check"></i>
+        </div>
+        <h4 class="font-heading text-2xl font-bold text-white">Access Granted</h4>
+        <p class="text-xs text-slate-400 max-w-xs mx-auto leading-relaxed">
+          We have generated your sandboxed credentials and dispatched an invitation link to your work email address.
+        </p>
+        <button onclick="closeContactModal()" class="px-6 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white text-xs font-semibold">
+          Return to Site
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- JAVASCRIPT LOGIC -->
+  <script>
+    // 1. Dynamic Year Update
+    document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+    // 2. Mobile Menu Toggle
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    function toggleMobileMenu() {
+      mobileMenu.classList.toggle('hidden');
+    }
+    function closeMobileMenu() {
+      mobileMenu.classList.add('hidden');
+    }
+    mobileMenuBtn.addEventListener('click', toggleMobileMenu);
+
+    // Close mobile nav on click of link
+    document.querySelectorAll('.mobile-nav-link').forEach(link => {
+      link.addEventListener('click', closeMobileMenu);
+    });
+
+    // 3. Dark / Light Theme Toggle
+    const htmlElem = document.documentElement;
+    const themeToggleBtn = document.getElementById('themeToggleBtn');
+    const mobileThemeToggle = document.getElementById('mobileThemeToggle');
+    const themeIcon = document.getElementById('themeIcon');
+    const mobileThemeIcon = document.getElementById('mobileThemeIcon');
+
+    function applyTheme(isDark) {
+      if (isDark) {
+        htmlElem.classList.add('dark');
+        htmlElem.classList.remove('light');
+        themeIcon.classList.remove('fa-sun');
+        themeIcon.classList.add('fa-moon');
+        mobileThemeIcon.classList.remove('fa-sun');
+        mobileThemeIcon.classList.add('fa-moon');
+      } else {
+        htmlElem.classList.remove('dark');
+        htmlElem.classList.add('light');
+        themeIcon.classList.remove('fa-moon');
+        themeIcon.classList.add('fa-sun');
+        mobileThemeIcon.classList.remove('fa-moon');
+        mobileThemeIcon.classList.add('fa-sun');
+      }
+    }
+
+    let isDark = true;
+    function handleToggleTheme() {
+      isDark = !isDark;
+      applyTheme(isDark);
+    }
+    themeToggleBtn.addEventListener('click', handleToggleTheme);
+    mobileThemeToggle.addEventListener('click', handleToggleTheme);
+
+    // 4. Feature Showcase Tab Switching
+    const tabButtons = document.querySelectorAll('.tab-btn');
+    const tabPanes = document.querySelectorAll('.tab-pane');
+
+    tabButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const targetId = btn.getAttribute('data-target');
+        
+        // Reset buttons styling
+        tabButtons.forEach(b => {
+          b.classList.remove('bg-brand-600', 'text-white', 'shadow-md');
+          b.classList.add('text-slate-400');
+        });
+        btn.classList.add('bg-brand-600', 'text-white', 'shadow-md');
+        btn.classList.remove('text-slate-400');
+
+        // Toggle panes
+        tabPanes.forEach(pane => {
+          if (pane.id === targetId) {
+            pane.classList.remove('hidden');
+          } else {
+            pane.classList.add('hidden');
+          }
+        });
+      });
+    });
+
+    // Simulated Chaos Button in Tab 1
+    const simFailBtn = document.getElementById('simFailBtn');
+    const simLog = document.getElementById('simLog');
+    if (simFailBtn) {
+      simFailBtn.addEventListener('click', () => {
+        simLog.classList.remove('hidden');
+        simFailBtn.disabled = true;
+        simFailBtn.textContent = 'Chaos Injected & Mitigated';
+        setTimeout(() => {
+          simFailBtn.disabled = false;
+          simFailBtn.textContent = 'Simulate Chaos Event';
+        }, 4000);
+      });
+    }
+
+    // 5. Interactive Pricing Toggle (Monthly vs Annual with 20% discount)
+    const billingToggle = document.getElementById('billingToggle');
+    const toggleBall = document.getElementById('toggleBall');
+    const monthlyLabel = document.getElementById('monthlyLabel');
+    const annualLabel = document.getElementById('annualLabel');
+    const priceVals = document.querySelectorAll('.price-val');
+    let isAnnual = false;
+
+    billingToggle.addEventListener('click', () => {
+      isAnnual = !isAnnual;
+      if (isAnnual) {
+        toggleBall.style.transform = 'translateX(24px)';
+        monthlyLabel.classList.remove('text-white');
+        monthlyLabel.classList.add('text-slate-400');
+        annualLabel.classList.add('text-white');
+        annualLabel.classList.remove('text-slate-400');
+
+        priceVals.forEach(val => {
+          const annualPrice = val.getAttribute('data-annual');
+          if (annualPrice) val.textContent = '$' + annualPrice;
+        });
+      } else {
+        toggleBall.style.transform = 'translateX(0px)';
+        monthlyLabel.classList.add('text-white');
+        monthlyLabel.classList.remove('text-slate-400');
+        annualLabel.classList.remove('text-white');
+        annualLabel.classList.add('text-slate-400');
+
+        priceVals.forEach(val => {
+          const monthlyPrice = val.getAttribute('data-monthly');
+          if (monthlyPrice) val.textContent = '$' + monthlyPrice;
+        });
+      }
+    });
+
+    // 6. Lead / Contact Modal Functionality
+    const contactModal = document.getElementById('contactModal');
+    const modalBox = document.getElementById('modalBox');
+    const modalTopicBadge = document.getElementById('modalTopicBadge');
+    const formState = document.getElementById('formState');
+    const successState = document.getElementById('successState');
+    const leadForm = document.getElementById('leadForm');
+
+    function openContactModal(contextTopic = 'General Inquiry') {
+      if (modalTopicBadge) modalTopicBadge.textContent = contextTopic;
+      formState.classList.remove('hidden');
+      successState.classList.add('hidden');
+      leadForm.reset();
+      
+      contactModal.classList.remove('opacity-0', 'pointer-events-none');
+      contactModal.classList.add('opacity-100');
+      modalBox.classList.remove('scale-95');
+      modalBox.classList.add('scale-100');
+    }
+
+    function closeContactModal() {
+      contactModal.classList.add('opacity-0', 'pointer-events-none');
+      contactModal.classList.remove('opacity-100');
+      modalBox.classList.add('scale-95');
+      modalBox.classList.remove('scale-100');
+    }
+
+    // Close on backdrop click
+    contactModal.addEventListener('click', (e) => {
+      if (e.target === contactModal) {
+        closeContactModal();
+      }
+    });
+
+    // Form submission handle
+    function handleLeadSubmit(e) {
+      e.preventDefault();
+      const submitBtn = document.getElementById('submitBtn');
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Provisioning Cluster...';
+
+      // Simulate API call
+      setTimeout(() => {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '<span>Deploy Custom Sandbox</span><i class="fa-solid fa-arrow-right text-xs"></i>';
+        formState.classList.add('hidden');
+        successState.classList.remove('hidden');
+      }, 1200);
+    }
+
+    // 7. Newsletter Subscription Handler
+    function handleNewsletter(e) {
+      e.preventDefault();
+      const input = document.getElementById('newsEmail');
+      const msg = document.getElementById('newsSuccess');
+      if (input.value) {
+        msg.classList.remove('hidden');
+        input.value = '';
+        setTimeout(() => {
+          msg.classList.add('hidden');
+        }, 5000);
+      }
+    }
+
+    // 8. Animated Counters on Scroll
+    let countersAnimated = false;
+    const counterElements = document.querySelectorAll('.counter');
+
+    function animateCounters() {
+      counterElements.forEach(counter => {
+        const target = parseFloat(counter.getAttribute('data-target'));
+        let current = 0;
+        const duration = 1800;
+        const stepTime = 30;
+        const steps = duration / stepTime;
+        const increment = target / steps;
+        const isDecimal = target % 1 !== 0;
+
+        const timer = setInterval(() => {
+          current += increment;
+          if (current >= target) {
+            current = target;
+            clearInterval(timer);
+          }
+          if (isDecimal) {
+            counter.textContent = current.toFixed(2) + (target === 99.99 ? '%' : '');
+          } else {
+            counter.textContent = Math.floor(current) + (target === 500 ? 'M+' : target === 180 ? '+' : '');
+          }
+        }, stepTime);
+      });
+    }
+
+    // Trigger counters when metrics section is visible
+    const metricsSection = document.getElementById('metrics');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && !countersAnimated) {
+          countersAnimated = true;
+          animateCounters();
+        }
+      });
+    }, { threshold: 0.3 });
+
+    if (metricsSection) {
+      observer.observe(metricsSection);
+    }
+  </script>
+</body>
+</html>
